@@ -28,9 +28,7 @@ export const RenderRoutes = (props) => {
                         strict={route.strict}
                         render={(data) => {
                             let title = route.tabTitle || route.title;
-                            document.title = title
-                                ? title
-                                : "" + "Yatra Whiteboard";
+                            document.title = title ? `${title}` : "" + "Yatra";
                             return (
                                 <ContentWrapper
                                     {...props}

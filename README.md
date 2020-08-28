@@ -1,2 +1,7 @@
-# testWhiteboard
-nepali whiteboard with rich features
+## Available scripts
+
+# npm start
+
+# npm watch
+
+# npm build

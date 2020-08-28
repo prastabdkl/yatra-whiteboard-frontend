@@ -2,6 +2,13 @@ import React from "react";
 import { canAccess } from "../../misc";
 import { HomePage } from "../pages/HomePage";
 import { RoutePage } from "../pages/RoutePage";
+import { Login } from "../auth";
+import { UsersList, UserForm, UserProfile, UserDetails } from "../users";
+
+const user_permissions = [
+    ["user-list", "post"],
+    ["user-detail", "get"],
+];
 
 const routes = [
     {
@@ -14,43 +21,60 @@ const routes = [
     },
 
     {
-        path: "/upload",
-        title: "Upload Image",
-        icon: "upload",
+        path: "/profile",
         exact: true,
         accessible: true,
-        component: HomePage,
+        component: UserProfile,
     },
 
     {
-        rootPath: "/mynestedroutes",
-        path: "#",
-        title: "Editor",
-        icon: "terminal",
-        component: RoutePage,
+        path: "/login",
+        component: Login,
         accessible: true,
+        exact: true,
+    },
+
+    // User Routes
+
+    {
+        rootPath: "#",
+        path: "#user",
+        icon: "users",
+        title: "User",
+        accessible: canAccess([["corporate-staff", true]]),
         exact: true,
         routes: [
             {
-                path: "/nestedrouteone",
+                path: "/user",
+                title: "All Users",
+                icon: "users",
+                component: UsersList,
+                accessible: canAccess([["corporate-staff", true]]),
                 exact: true,
-                accessible: true,
-                component: RoutePage,
             },
+
             {
-                path: "/drawing",
+                path: "/user/:idx",
+                icon: "file alternate",
+                component: UserDetails,
+                accessible: canAccess([["corporate-staff", true]]),
                 exact: true,
-                title: "Drawing",
-                accessible: true,
-                component: RoutePage,
             },
+
             {
-                path: "/text",
-                title: "Text",
-                icon: "user",
+                path: "/users/new",
+                icon: "file alternate",
+                component: UserForm,
+                accessible: canAccess([["corporate-staff", true]]),
                 exact: true,
-                accessible: true,
-                component: RoutePage,
+            },
+
+            {
+                path: "/user/:idx/edit",
+                icon: "file alternate",
+                component: UserForm,
+                accessible: canAccess([["corporate-staff", true]]),
+                exact: true,
             },
         ],
     },

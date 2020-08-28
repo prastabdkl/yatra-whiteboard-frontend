@@ -22,8 +22,8 @@ body {
     width: 250px !important;
     padding-left: 30px;
 }
+
 #SideBarNav {
-    padding-top: 30px;
     width: 250px !important;
 }
 
@@ -79,16 +79,24 @@ body {
     #sideNav {
         display: block !important;
     }
+
+    #SideBarNav {
+        padding-top: 30px;
+    }
 }
 @media only screen and (max-width: 767px) {
     #navSwitcher {
-        display: block !important;
+        display: flex !important;
     }
     #projectLogo {
         display: none !important;
     }
     #sideNav {
         display: none !important;
+    }
+
+    #SideBarNav {
+        padding: 0 16px;
     }
 }
 
@@ -108,4 +116,8 @@ body {
 
 .display-none {
     display: none !important;
+}
+
+.text-center {
+    text-align: center;
 }

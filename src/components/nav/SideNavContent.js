@@ -24,7 +24,7 @@ class SideNavContent extends React.Component {
         return true;
     };
     render() {
-        const { routes, children } = this.props;
+        const { _user, routes, children } = this.props;
 
         return (
             <React.Fragment>
@@ -34,13 +34,23 @@ class SideNavContent extends React.Component {
                             <i className="user circle teal icon huge" />
                         </div>
                         <div class="content">
-                            <h4>User Name</h4>
+                            <h4>{_user.name}</h4>
+                            <div class="meta">
+                                {_user.roles &&
+                                    _user.roles.map((role) => (
+                                        <div
+                                            className={`${role.name} ui label mini`}
+                                        >
+                                            {role.name}
+                                        </div>
+                                    ))}
+                            </div>
                         </div>
                     </div>
                 </div>
                 <div class="meta">
                     <i className="ui icon mail outline" />
-                    <small>user@example.com</small>
+                    <small>{_user.email}</small>
                 </div>
 
                 <hr className="divider" />

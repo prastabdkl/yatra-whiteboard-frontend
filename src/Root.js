@@ -1,39 +1,60 @@
-import React from 'react'
-import {withRouter} from 'react-router-dom'
+import React from "react";
+import { withRouter } from "react-router-dom";
+import { getUserProfile } from "./request";
 
-import App from './App'
-
+import App from "./App";
 
 class Root extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = this.initialState();
+    }
 
-	constructor(props) {
-		super(props)
-		this.state = this.initialState()
-	}
+    componentDidMount() {
+        this.props.history.listen((location, action) => {
+            console.log("location", location, action, this.props);
+            if (location.pathname != this.props.location.pathname)
+                this.setState({ _sidebar: false });
+        });
 
-	componentDidMount() {
-		this.props.history.listen((location, action) => {
-			console.log("location", location, action, this.props)
-			if(location.pathname != this.props.location.pathname) this.setState({_sidebar: false})
-		})
-	}
+        const user_details = JSON.parse(localStorage.getItem("_user-details"));
+        if (user_details != undefined) {
+            this.setState({
+                _token: user_details.auth_token,
+            });
 
-	initialState() {
-		return {
-			_sidebar: false
-		}
-	}
+            getUserProfile().then((res) => {
+                if (res.success) {
+                    this.setState({
+                        _user: res.data,
+                    });
+                }
+            });
+        }
+    }
 
-	setGlobal(key, val) {
-		if(!key) throw "Can not set global state without key"
-		this.setState({[key]: val})
-	}
+    initialState() {
+        return {
+            _user: {},
+            _token: null,
+            _sidebar: false,
+        };
+    }
 
-	render() {
-		return <App {...this.props} {...this.state}
-						setGlobal={(key, val) => this.setGlobal(key, val)}
-					/>
-	}
+    setGlobal(key, val) {
+        if (!key) throw "Can not set global state without key";
+        this.setState({ [key]: val });
+    }
+
+    render() {
+        return (
+            <App
+                {...this.props}
+                {...this.state}
+                setGlobal={(key, val) => this.setGlobal(key, val)}
+            />
+        );
+    }
 }
 
-export default withRouter(Root)
+export default withRouter(Root);

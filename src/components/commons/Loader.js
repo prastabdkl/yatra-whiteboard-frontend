@@ -1,12 +1,17 @@
-import React from 'react'
-
+import React from "react";
 
 export function Loader(props) {
-
-    return <div className={"ui padded segment " + (props.basic ? "basic" : "") } >
-                <div className="ui active inverted dimmer">
-                    <div className="ui active medium text loader">{this.props.msg || ""}</div>
+    return (
+        <div className={"ui padded segment " + (props.basic ? "basic" : "")}>
+            <div className="ui active inverted dimmer">
+                <div className="ui active medium text loader">
+                    {this.props.msg || ""}
                 </div>
-                <img className="ui wireframe image" src="https://semantic-ui.com/images/wireframe/paragraph.png" />
             </div>
+            <img
+                className="ui wireframe image"
+                src="https://semantic-ui.com/images/wireframe/paragraph.png"
+            />
+        </div>
+    );
 }

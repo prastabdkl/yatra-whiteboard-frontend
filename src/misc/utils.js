@@ -27,3 +27,15 @@ export const keyToTitleCase = (str) => {
     }
     return frags.join(" ");
 };
+
+export const clearLocalStorage = () => {
+    localStorage.removeItem("_user-details");
+    localStorage.removeItem("auth_token");
+};
+
+export function view(value) {
+    if (value) {
+        return value;
+    }
+    return "N/A";
+}

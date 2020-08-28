@@ -30,7 +30,7 @@ export function UpperNav(props) {
             </div>
             <div className="item font-20">Yatra 2.0</div>
             <div className="right item">
-                <ActionMenu />
+                <ActionMenu {...props} />
             </div>
         </div>
     );
