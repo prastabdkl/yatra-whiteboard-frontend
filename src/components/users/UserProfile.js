@@ -172,38 +172,6 @@ class UserProfile extends Component {
                                                         </List.Content>
                                                     </List.Item>
                                                 </List>
-
-                                                <h3 className="page-title">
-                                                    Roles
-                                                </h3>
-                                                {user.is_superuser && (
-                                                    <Label
-                                                        horizontal
-                                                        size="small"
-                                                        className="red"
-                                                    >
-                                                        Super User
-                                                    </Label>
-                                                )}
-                                                {user.is_staff && (
-                                                    <Label
-                                                        horizontal
-                                                        size="small"
-                                                        className="yellow"
-                                                    >
-                                                        Staff
-                                                    </Label>
-                                                )}
-                                                {user.roles &&
-                                                    user.roles.map((role) => (
-                                                        <Label
-                                                            horizontal
-                                                            size="small"
-                                                            className="teal"
-                                                        >
-                                                            {role.name}
-                                                        </Label>
-                                                    ))}
                                             </div>
                                         </div>
                                     </Card.Description>

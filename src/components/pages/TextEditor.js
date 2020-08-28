@@ -26,6 +26,7 @@ const $ = window.$;
 
 export const TextEditor = () => {
     const [editorValue, setEditorValue] = useState();
+    const [content, setContent] = useState();
     const [language, setLanguage] = useState();
 
     const copyToClipboard = (str) => {
@@ -44,6 +45,7 @@ export const TextEditor = () => {
     const handleChange = (html, text) => {
         // html is the new html content
         // text is the new text content
+        setContent(html);
     };
 
     return (
@@ -78,6 +80,7 @@ export const TextEditor = () => {
                     Copy
                 </button>
             </div>
+            <TrixEditor onChange={handleChange}></TrixEditor>
 
             <Editor
                 plugins={plugins}

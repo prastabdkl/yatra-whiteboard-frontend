@@ -39,3 +39,7 @@
 .canvas-container canvas {
     height: 400px;
 }
+
+.invisible {
+    visibility: hidden;
+}

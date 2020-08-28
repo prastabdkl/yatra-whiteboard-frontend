@@ -1,8 +1,9 @@
-import React from "react";
+import React, { Fragment } from "react";
 import { withRouter } from "react-router-dom";
 import { getUserProfile } from "./request";
 
 import App from "./App";
+import { Form, Modal, Button } from "semantic-ui-react";
 
 class Root extends React.Component {
     constructor(props) {
@@ -22,10 +23,11 @@ class Root extends React.Component {
         const user_details = JSON.parse(localStorage.getItem("_user-details"));
         if (user_details != undefined) {
             this.setState({
-                _token: user_details.auth_token,
+                _token: user_details.key,
             });
 
             getUserProfile().then((res) => {
+                debugger;
                 if (res.success) {
                     this.setState({
                         _user: res.data,
@@ -41,6 +43,7 @@ class Root extends React.Component {
             _token: null,
             _sidebar: false,
             _section: "",
+            _creatingBoard: false,
         };
     }
 
@@ -51,11 +54,39 @@ class Root extends React.Component {
 
     render() {
         return (
-            <App
-                {...this.props}
-                {...this.state}
-                setGlobal={(key, val) => this.setGlobal(key, val)}
-            />
+            <Fragment>
+                <App
+                    {...this.props}
+                    {...this.state}
+                    setGlobal={(key, val) => this.setGlobal(key, val)}
+                />
+                <Modal
+                    size="mini"
+                    open={this.state._creatingBoard}
+                    onClose={() =>
+                        this.setState({
+                            _creatingBoard: false,
+                        })
+                    }
+                >
+                    <Modal.Header>Enter your board name</Modal.Header>
+                    <Modal.Content>
+                        <Form>
+                            <Form.Group inline>
+                                <Form.Field>
+                                    <Form.Input type="text"></Form.Input>
+                                </Form.Field>
+                                <Button
+                                    type="submit"
+                                    className="ui basic primary button"
+                                >
+                                    Submit
+                                </Button>
+                            </Form.Group>
+                        </Form>
+                    </Modal.Content>
+                </Modal>
+            </Fragment>
         );
     }
 }

@@ -30,6 +30,13 @@ export function UpperNav(props) {
             </div>
             <div className="item font-20">Yatra 2.0</div>
             <div className="right item">
+                <div className="item">My Boards</div>
+                <div
+                    className="item"
+                    onClick={() => props.setGlobal("_creatingBoard", true)}
+                >
+                    Create New Board
+                </div>
                 <ActionMenu {...props} />
             </div>
         </div>
