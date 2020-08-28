@@ -38,10 +38,6 @@ class Root extends React.Component {
                     });
                 }
             });
-        } else {
-            this.setState({
-                _token: null,
-            });
         }
     }
 

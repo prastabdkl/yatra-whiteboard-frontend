@@ -35,6 +35,7 @@ const Login = (props) => {
                 setFetching(true);
 
                 loginUser(data).then((response) => {
+                    debugger;
                     setFetching(false);
                     if (!response.success) {
                         toast(response.data.detail, { type: "error" });

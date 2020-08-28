@@ -14,7 +14,7 @@ export function LandingPage(props) {
             <div className="container-fluid ">
                 <Grid>
                     <Grid.Row verticalAlign="middle" centered>
-                        <Grid.Column width={5} className="center aligned">
+                        <Grid.Column className="five wide computer sixteen wide mobile center aligned">
                             <h1>Classroom Teaching made easy</h1>
                             <Button
                                 animated="fade"
@@ -26,9 +26,7 @@ export function LandingPage(props) {
                                 <Button.Content visible>
                                     Get Started
                                 </Button.Content>
-                                <Button.Content hidden>
-                                    Create a board
-                                </Button.Content>
+                                <Button.Content hidden>Login</Button.Content>
                             </Button>
                             {gettingStarted && <Login {...props}></Login>}
                         </Grid.Column>

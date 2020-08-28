@@ -16,6 +16,7 @@ import {
 import Base from "./Base";
 import { Login } from "./components/auth";
 import { LandingPage } from "./components/pages";
+import { Footer } from "./components/commons";
 
 export const RenderRoutes = (props) => {
     return (
@@ -125,7 +126,7 @@ class App extends Base {
                         </div>
                     </Sidebar.Pusher>
                 </Sidebar.Pushable>
-                {/* <Footer /> */}
+                <Footer />
             </React.Fragment>
         );
     }
