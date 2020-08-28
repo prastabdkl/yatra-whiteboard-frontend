@@ -36,10 +36,7 @@ export function updateBoard(idx, values) {
     })();
 }
 
-export function createBoard(idx, values) {
-    if (idx) {
-        return updateBoard(idx, values);
-    }
+export function createBoard(values) {
     return api_post({
         url: "BOARD_CREATE",
         data: values,

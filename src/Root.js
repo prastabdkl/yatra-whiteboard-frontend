@@ -4,6 +4,7 @@ import { getUserProfile } from "./request";
 
 import App from "./App";
 import { Form, Modal, Button } from "semantic-ui-react";
+import { BoardForm } from "./components/boards";
 
 class Root extends React.Component {
     constructor(props) {
@@ -27,7 +28,6 @@ class Root extends React.Component {
             });
 
             getUserProfile().then((res) => {
-                debugger;
                 if (res.success) {
                     this.setState({
                         _user: res.data,
@@ -71,19 +71,11 @@ class Root extends React.Component {
                 >
                     <Modal.Header>Enter your board name</Modal.Header>
                     <Modal.Content>
-                        <Form>
-                            <Form.Group inline>
-                                <Form.Field>
-                                    <Form.Input type="text"></Form.Input>
-                                </Form.Field>
-                                <Button
-                                    type="submit"
-                                    className="ui basic primary button"
-                                >
-                                    Submit
-                                </Button>
-                            </Form.Group>
-                        </Form>
+                        <BoardForm
+                            {...this.props}
+                            {...this.state}
+                            setGlobal={(key, val) => this.setGlobal(key, val)}
+                        ></BoardForm>
                     </Modal.Content>
                 </Modal>
             </Fragment>

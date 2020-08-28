@@ -61,6 +61,14 @@ export const TextEditor = () => {
                     </div>
                 </Menu.Item>
             </Menu>
+            <TrixEditor onChange={handleChange}></TrixEditor>
+
+            {/* <Editor
+                plugins={plugins}
+                defaultPlugin={slate()}
+                value={editorValue}
+                onChange={setEditorValue}
+            /> */}
             <div className={language !== "nepali" ? "invisible" : ""}>
                 <a
                     rel="nofollow"
@@ -80,14 +88,6 @@ export const TextEditor = () => {
                     Copy
                 </button>
             </div>
-            <TrixEditor onChange={handleChange}></TrixEditor>
-
-            <Editor
-                plugins={plugins}
-                defaultPlugin={slate()}
-                value={editorValue}
-                onChange={setEditorValue}
-            />
         </Fragment>
     );
 };

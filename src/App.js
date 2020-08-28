@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Fragment } from "react";
 import { Header, Icon, Image, Menu, Segment, Sidebar } from "semantic-ui-react";
 import { ToastContainer, toast } from "react-toastify";
 import { Switch, Route, withRouter } from "react-router-dom";
@@ -14,6 +14,7 @@ import {
 } from "./components";
 // import { NotFound } from '../components'
 import Base from "./Base";
+import { Login } from "./components/auth";
 
 export const RenderRoutes = (props) => {
     return (
@@ -65,27 +66,55 @@ class App extends Base {
     }
 
     render() {
-        return (
-            <Sidebar.Pushable as={Segment} id="mainPusher">
-                <Sidebar
-                    as={Menu}
-                    animation="overlay"
-                    vertical
-                    visible={this.props._sidebar}
-                    width="wide"
-                    onShow={() => this.handleShow()}
-                    onHide={() => this.handleHide()}
-                    id="SideBarNav"
-                >
-                    <SideNavContent
+        const { _token, loggedIn } = this.props;
+        var content = (
+            <App
+                {...this.props}
+                {...this.state}
+                setGlobal={(key, val) => this.setGlobal(key, val)}
+                loggedIn={_token}
+            />
+        );
+        if (!_token) {
+            content = (
+                <Fragment>
+                    <UpperNav
+                        {...this.props}
+                        setGlobal={(key, val) => this.setGlobal(key, val)}
+                        loggedIn={_token}
+                    />
+                    <Login
                         {...this.props}
                         {...this.state}
-                        routes={routes}
+                        setGlobal={(key, val) => this.setGlobal(key, val)}
+                        loggedIn={_token}
                     />
-                </Sidebar>
+                </Fragment>
+            );
+        }
+        return (
+            <Sidebar.Pushable as={Segment} id="mainPusher">
+                {loggedIn && (
+                    <Sidebar
+                        as={Menu}
+                        animation="overlay"
+                        vertical
+                        visible={this.props._sidebar}
+                        width="wide"
+                        onShow={() => this.handleShow()}
+                        onHide={() => this.handleHide()}
+                        id="SideBarNav"
+                    >
+                        <SideNavContent
+                            {...this.props}
+                            {...this.state}
+                            routes={routes}
+                        />
+                    </Sidebar>
+                )}
                 <Sidebar.Pusher dimmed={this.props._sidebar}>
                     <div className="ui fluid container">
-                        <UpperNav {...this.props} />
+                        <UpperNav {...this.props} loggedIn={_token} />
 
                         <div
                             className="ui equal width divided grid"
@@ -96,6 +125,7 @@ class App extends Base {
                                     {...this.props}
                                     {...this.state}
                                     routes={routes}
+                                    loggedIn={_token}
                                 />
                             </div>
                             <div className="column" id="mainContent">
@@ -103,6 +133,7 @@ class App extends Base {
                                     {...this.props}
                                     {...this.state}
                                     routes={staticRoutes}
+                                    loggedIn={_token}
                                 />
                             </div>
                         </div>
