@@ -31,8 +31,8 @@ export const CanvasEditor = (props) => {
         canvasWidth: 400,
         canvasHeight: 400,
         disabled: false,
-        imgSrc:
-            "https://lh3.googleusercontent.com/GBm5XIFmoXROY-tELop17jsz8u2OtEElp2xfZtiXJJ7T0uWLapMeglUkcCAR07QUGJ4s=w412-h220-rw",
+        imgSrc: "",
+        // "https://lh3.googleusercontent.com/GBm5XIFmoXROY-tELop17jsz8u2OtEElp2xfZtiXJJ7T0uWLapMeglUkcCAR07QUGJ4s=w412-h220-rw",
         saveData: null,
         immediateLoading: false,
         hideInterface: false,

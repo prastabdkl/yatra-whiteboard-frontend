@@ -32,7 +32,14 @@ export function UpperNav(props) {
             </div>
             <div className="item font-20">Yatra 2.0</div>
             <div className="right item">
-                {loggedIn && <div className="item">My Boards</div>}
+                {loggedIn && (
+                    <div
+                        className="item"
+                        onClick={() => props.history.push("/my-boards")}
+                    >
+                        My Boards
+                    </div>
+                )}
                 {loggedIn && (
                     <div
                         className="item"

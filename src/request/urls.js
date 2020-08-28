@@ -12,7 +12,7 @@ export const URLS = {
 
     ROLE: `/api/role/`,
 
-    BOARD: `/api/boards/`,
+    BOARD: `/api/v1/boards/list`,
     BOARD_CREATE: `/api/v1/boards/create/`,
     MY_BOARD: `/api/my_boards/:idx/`,
     BOARD_DETAIL: `/api/v1/boards/:idx/`,

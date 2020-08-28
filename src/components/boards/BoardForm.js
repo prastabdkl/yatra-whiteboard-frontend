@@ -21,8 +21,8 @@ export const BoardForm = (props) => {
                 var data = form.form("get values");
                 setFetching(true);
                 data.user = props._user.idx;
-                debugger;
                 createBoard(data).then((response) => {
+                    debugger;
                     setFetching(false);
                     if (!response.success) {
                         toast(response.data.detail, { type: "error" });
@@ -39,7 +39,7 @@ export const BoardForm = (props) => {
         <div>
             <Form id="BoardForm">
                 <FormError errors={errors} />
-                <Form.Group inline>
+                <div className="text-center">
                     <Form.Field>
                         <Form.Input
                             id="name"
@@ -55,7 +55,7 @@ export const BoardForm = (props) => {
                     >
                         Submit
                     </Button>
-                </Form.Group>
+                </div>
             </Form>
         </div>
     );

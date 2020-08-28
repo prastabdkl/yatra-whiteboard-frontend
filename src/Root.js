@@ -99,6 +99,25 @@ class Root extends React.Component {
                     draggablePercent={60}
                     position="bottom-right"
                 />
+                <Modal
+                    closeIcon
+                    size="mini"
+                    open={this.state._creatingBoard}
+                    onClose={() =>
+                        this.setState({
+                            _creatingBoard: false,
+                        })
+                    }
+                >
+                    <Modal.Header>Enter your board name</Modal.Header>
+                    <Modal.Content>
+                        <BoardForm
+                            {...this.props}
+                            {...this.state}
+                            setGlobal={(key, val) => this.setGlobal(key, val)}
+                        ></BoardForm>
+                    </Modal.Content>
+                </Modal>
             </Fragment>
         );
     }

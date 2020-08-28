@@ -14,13 +14,7 @@ import {
     Dropdown,
 } from "semantic-ui-react";
 import { Link } from "react-router-dom";
-import {
-    getAllUsers,
-    getAllRoles,
-    exportUser,
-    getAllBranches,
-    getAllBoards,
-} from "../../request";
+import { getAllBoards } from "../../request";
 import { SearchBar, Can, FilterForm } from "../commons";
 import { withLoading, withEmptyValue, withPagination } from "../hoc";
 import { toast } from "react-toastify";
@@ -30,38 +24,27 @@ import _ from "lodash";
 const Listing = ({ values }) => {
     return (
         <List divided verticalAlign="middle" className="listings">
-            {values.map((user) => (
+            {values.map((board) => (
                 <List.Item className="item">
-                    <List.Content floated="right">
-                        {user.roles.map((role) => (
-                            <Label
-                                horizontal
-                                size="small"
-                                className={`${role}`}
-                            >
-                                {role}
-                            </Label>
-                        ))}
-                    </List.Content>
-                    {user.image && <Image avatar src={user.image} />}
+                    <List.Content floated="right"></List.Content>
+                    {board.image && <Image avatar src={board.image} />}
                     <List.Content>
                         <div>
                             <Link
                                 to={{
-                                    pathname: `/user/${user.idx}`,
+                                    pathname: `/board/${board.idx}`,
                                     state: {
-                                        profile: user,
+                                        profile: board,
                                     },
                                 }}
                             >
                                 <h3 className="ui teal header">
-                                    {user.name || "No Name"}
+                                    {board.title || "No Name"}
                                 </h3>
                             </Link>
                         </div>
                         <div>
-                            <i className="mail outline grey icon" />
-                            <small className="ui grey">{user.email}</small>
+                            <small className="ui grey">{board.email}</small>
                         </div>
                     </List.Content>
                 </List.Item>
@@ -73,39 +56,27 @@ const Listing = ({ values }) => {
 export class BoardList extends Component {
     state = {
         activeItem: "All",
-        allUsers: [],
-        searching: false,
-        users: [],
-        currentPage: 1,
-        totalPages: 1,
+        fetching: false,
+        boards: [],
         params: {},
         filter: false,
-        roles: [],
-        branches: [],
-        fetching: true,
     };
 
     componentDidMount() {
         this.fetchDetails();
-        getAllBranches().then((response) => {
-            if (!response.success) return;
-            this.setState({
-                branches: response.data.records,
-            });
-        });
     }
 
-    fetchDetails = async (params) => {
-        await getAllBoards(params).then((response) => {
+    fetchDetails = (params) => {
+        this.setState({
+            fetching: true,
+        });
+        getAllBoards(params).then((response) => {
             this.setState({
                 fetching: false,
             });
             if (response.success) {
                 this.setState({
-                    allUsers: response.data.records,
-                    users: response.data.records,
-                    currentPage: response.data.current_page,
-                    totalPages: response.data.total_pages,
+                    boards: response.data,
                 });
             } else {
                 toast(response.data.detail, { type: "error" });
@@ -119,9 +90,7 @@ export class BoardList extends Component {
         });
     };
 
-    activateItem = (name) => this.setState({ activeItem: name });
-
-    searchUser = _.debounce(() => this.fetchDetails(this.state.params), 2000);
+    searchBoard = _.debounce(() => this.fetchDetails(this.state.params), 2000);
 
     render() {
         const ListWithPagination = compose(
@@ -131,54 +100,46 @@ export class BoardList extends Component {
         const {
             activeItem,
             searching,
-            allUsers,
-            users,
+            boards,
             currentPage,
             totalPages,
             params,
             filter,
             roles,
-            branches,
             fetching,
         } = this.state;
-        const filterFields = [
-            {
-                label: "Branch",
-                name: "branch",
-                type: "select",
-                options: branches.map((branch) => {
-                    return {
-                        key: branch.name,
-                        value: branch.name,
-                        text: branch.name,
-                    };
-                }),
-            },
-            {
-                label: "Role",
-                name: "roles",
-                type: "select",
-                options: roles.map((role) => {
-                    return {
-                        key: role.name,
-                        value: role.name,
-                        text: role.name,
-                    };
-                }),
-            },
-        ];
+
+        const filterFields = [];
+
+        if (boards.length == 0) {
+            return (
+                <Segment fluid placeholder>
+                    <div className="ui icon header">
+                        <i className="file alternate outline icon"></i>
+                        <div
+                            className="ui large teal button"
+                            onClick={() =>
+                                this.props.setGlobal("_creatingBoard", true)
+                            }
+                        >
+                            Create new
+                        </div>
+                    </div>
+                </Segment>
+            );
+        }
 
         return (
             <Container>
                 <Grid verticalAlign="middle">
                     <Grid.Column floated="left" width={8}>
-                        <h2> Users </h2>
+                        <h2> My Boards </h2>
                     </Grid.Column>
-                    <Grid.Column floated="right" width={8} textAlign="right">
-                        <Link to="/users/new" className="ui button teal">
-                            ADD
-                        </Link>
-                    </Grid.Column>
+                    <Grid.Column
+                        floated="right"
+                        width={8}
+                        textAlign="right"
+                    ></Grid.Column>
                 </Grid>
                 <Menu pointing>
                     <Menu.Item
@@ -193,47 +154,14 @@ export class BoardList extends Component {
                             Filter
                         </div>
                     </Menu.Item>
-                    {users.length > 0 && (
-                        <Can
-                            perform={[["bank-staff", true]]}
-                            yes={() => (
-                                <Menu.Item
-                                    onClick={() =>
-                                        exportUser(params).then((res) => {
-                                            toast(
-                                                "Your data has been exported",
-                                                { type: "success" }
-                                            );
-                                        })
-                                    }
-                                >
-                                    <div>
-                                        <i className="download icon" /> Export
-                                    </div>
-                                </Menu.Item>
-                            )}
-                        />
-                    )}
                     <Menu.Menu position="right">
                         <Menu.Item>
-                            {/* <SearchBar
-								values={allUsers}
-								searchBy={'name'}
-								onSearch={(values) => {
-									this.setState({
-										searching: true,
-										users: values
-									});
-								}}
-							/> */}
                             <Input
                                 icon="search"
                                 placeholder="Search..."
                                 onChange={(e, data) => {
                                     const params = { search: data.value };
-                                    this.activateItem("All");
-                                    this.setParams(params);
-                                    this.searchUser();
+                                    this.searchBoard();
                                 }}
                             />
                         </Menu.Item>
@@ -251,8 +179,7 @@ export class BoardList extends Component {
                                 this.setState({
                                     filter: !filter,
                                 });
-                                this.setParams(values);
-                                await this.fetchDetails(values);
+                                this.fetchDetails(values);
                             }}
                         />
                     </div>
@@ -260,12 +187,12 @@ export class BoardList extends Component {
 
                 <Segment loading={fetching} placeholder={fetching}>
                     <ListWithPagination
-                        values={users}
-                        activePage={currentPage}
+                        values={boards}
+                        activePage={1}
                         onPageChange={(values) => {
                             this.fetchDetails(values);
                         }}
-                        totalPages={totalPages}
+                        totalPages={1}
                     />
                 </Segment>
             </Container>
