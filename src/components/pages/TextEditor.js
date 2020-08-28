@@ -4,13 +4,11 @@ import { TrixEditor } from "react-trix";
 
 import { Menu } from "semantic-ui-react";
 
-// The editor core
+// React Page
 import Editor from "@react-page/editor";
 import "@react-page/core/lib/index.css"; // we also want to load the stylesheets
-// Require editor ui stylesheet
 import "@react-page/ui/lib/index.css";
 
-// Load some exemplary plugins:
 import slate from "@react-page/plugins-slate"; // The rich text area plugin
 import "@react-page/plugins-slate/lib/index.css"; // Stylesheets for the rich text area plugin
 import background from "@react-page/plugins-background"; // A plugin for background images
@@ -24,7 +22,8 @@ const plugins = {
 
 const $ = window.$;
 
-export const TextEditor = () => {
+export const TextEditor = (props) => {
+    const { initialValue = "" } = props;
     const [editorValue, setEditorValue] = useState();
     const [content, setContent] = useState();
     const [language, setLanguage] = useState();
@@ -38,13 +37,9 @@ export const TextEditor = () => {
     };
 
     const handleEditorReady = (editor) => {
-        // this is a reference back to the editor if you want to
-        // do editing programatically
-        editor.insertString("editor is ready");
+        editor.loadHTML(initialValue);
     };
     const handleChange = (html, text) => {
-        // html is the new html content
-        // text is the new text content
         setContent(html);
     };
 
@@ -61,7 +56,10 @@ export const TextEditor = () => {
                     </div>
                 </Menu.Item>
             </Menu>
-            <TrixEditor onChange={handleChange}></TrixEditor>
+            <TrixEditor
+                onEditorReady={handleEditorReady}
+                onChange={handleChange}
+            ></TrixEditor>
 
             {/* <Editor
                 plugins={plugins}

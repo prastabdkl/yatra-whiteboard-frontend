@@ -20,14 +20,16 @@ import { withLoading, withEmptyValue, withPagination } from "../hoc";
 import { toast } from "react-toastify";
 import { compose } from "recompose";
 import _ from "lodash";
+import moment from "moment";
 
 const Listing = ({ values }) => {
+    debugger;
     return (
         <List divided verticalAlign="middle" className="listings">
             {values.map((board) => (
                 <List.Item className="item">
                     <List.Content floated="right"></List.Content>
-                    {board.image && <Image avatar src={board.image} />}
+                    {board.picture && <Image avatar src={board.picture} />}
                     <List.Content>
                         <div>
                             <Link
@@ -44,7 +46,9 @@ const Listing = ({ values }) => {
                             </Link>
                         </div>
                         <div>
-                            <small className="ui grey">{board.email}</small>
+                            <small className="ui grey">
+                                {moment().format("DD-MMM-YYYY")}
+                            </small>
                         </div>
                     </List.Content>
                 </List.Item>
@@ -117,7 +121,7 @@ export class BoardList extends Component {
                     <div className="ui icon header">
                         <i className="file alternate outline icon"></i>
                         <div
-                            className="ui large teal button"
+                            className="ui large primary button"
                             onClick={() =>
                                 this.props.setGlobal("_creatingBoard", true)
                             }
@@ -142,7 +146,7 @@ export class BoardList extends Component {
                     ></Grid.Column>
                 </Grid>
                 <Menu pointing>
-                    <Menu.Item
+                    {/* <Menu.Item
                         onClick={() =>
                             this.setState({
                                 filter: !filter,
@@ -153,7 +157,7 @@ export class BoardList extends Component {
                             <i className="sliders horizontal link icon" />{" "}
                             Filter
                         </div>
-                    </Menu.Item>
+                    </Menu.Item> */}
                     <Menu.Menu position="right">
                         <Menu.Item>
                             <Input

@@ -9,39 +9,37 @@ const $ = window.$;
 
 export const CanvasEditor = (props) => {
     const [options, setOptions] = useState({
-        selectColor: false,
         changeBrushRadius: false,
+        brushColor: "#E01F1F",
+        brushRadius: 4,
+        cWidth: 400,
+        cHeight: 400,
     });
-    const [color, setColor] = useState("#E01F1F");
-    const [bRadius, setBrushRadius] = useState(12);
     const [image, setImage] = useState({ name: "", data: "" });
 
     let saveableCanvas = null;
 
     const canvasProps = {
-        width: 1000,
+        ...options,
         onChange: null,
         loadTimeOffset: 5,
         lazyRadius: 0,
-        brushRadius: bRadius,
-        brushColor: color,
         catenaryColor: "#0a0302",
         gridColor: "rgba(150,150,150,0.17)",
         hideGrid: false,
-        canvasWidth: 400,
-        canvasHeight: 400,
         disabled: false,
         imgSrc: "",
-        // "https://lh3.googleusercontent.com/GBm5XIFmoXROY-tELop17jsz8u2OtEElp2xfZtiXJJ7T0uWLapMeglUkcCAR07QUGJ4s=w412-h220-rw",
         saveData: null,
         immediateLoading: false,
         hideInterface: false,
     };
+    debugger;
 
     return (
         <div className="ui container canvas-container">
             <CanvasDraw
                 {...canvasProps}
+                {...props}
                 ref={(canvasDraw) => (saveableCanvas = canvasDraw)}
             />
             <Popup
@@ -68,6 +66,7 @@ export const CanvasEditor = (props) => {
                         icon="paint brush"
                         onClick={() => {
                             setOptions({
+                                ...options,
                                 changeBrushRadius: !options.changeBrushRadius,
                             });
                         }}
@@ -99,12 +98,34 @@ export const CanvasEditor = (props) => {
             >
                 Save
             </button>
+            <button
+                className="ui button basic negative"
+                onClick={() => {
+                    saveableCanvas.clear();
+                }}
+            >
+                Clear
+            </button>
+            <Popup
+                content="Undo"
+                inverted
+                trigger={
+                    <Button
+                        circular
+                        color="blue"
+                        icon="share"
+                        onClick={() => {
+                            saveableCanvas.undo();
+                        }}
+                    />
+                }
+            />
             <div>
                 {options.selectColor && (
                     <SketchPicker
-                        color={color}
+                        color={options.brushColor}
                         onChangeComplete={(color) => {
-                            setColor(color.hex);
+                            setOptions({ ...options, brushColor: color.hex });
                         }}
                     />
                 )}
@@ -112,18 +133,30 @@ export const CanvasEditor = (props) => {
                     <Fragment>
                         <div
                             className="ui button basic"
-                            onClick={() => setBrushRadius(bRadius - 1)}
+                            onClick={() =>
+                                setOptions({
+                                    ...options,
+                                    brushRadius: options.brushRadius - 1,
+                                })
+                            }
                         >
                             -
                         </div>
                         <input
-                            value={bRadius}
+                            value={options.brushRadius}
                             type="number"
-                            onChange={(e, value) => setBrushRadius(value)}
+                            onChange={(e, value) =>
+                                setOptions({ ...options, brushRadius: value })
+                            }
                         />
                         <div
                             className="ui button basic"
-                            onClick={() => setBrushRadius(bRadius + 1)}
+                            onClick={() =>
+                                setOptions({
+                                    ...options,
+                                    brushRadius: options.brushRadius + 1,
+                                })
+                            }
                         >
                             +
                         </div>
