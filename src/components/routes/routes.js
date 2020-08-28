@@ -107,19 +107,21 @@ const routes = [
                 accessible: true,
                 exact: true,
             },
+        ],
+    },
 
+    {
+        rootPath: "#",
+        path: "#local",
+        icon: "language",
+        title: "Insert Your Language",
+        accessible: true,
+        exact: true,
+        routes: [
             {
-                path: "/users/new",
-                icon: "file alternate",
-                component: UserForm,
-                accessible: true,
-                exact: true,
-            },
-
-            {
-                path: "/user/:idx/edit",
-                icon: "file alternate",
-                component: UserForm,
+                path: "#nepali",
+                title: "Nepali",
+                icon: "flag",
                 accessible: true,
                 exact: true,
             },

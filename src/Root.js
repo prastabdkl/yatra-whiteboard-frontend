@@ -12,6 +12,8 @@ class Root extends React.Component {
 
     componentDidMount() {
         this.props.history.listen((location, action) => {
+            this.setGlobal("_section", this.props.location.hash);
+
             console.log("location", location, action, this.props);
             if (location.pathname != this.props.location.pathname)
                 this.setState({ _sidebar: false });
@@ -38,6 +40,7 @@ class Root extends React.Component {
             _user: {},
             _token: null,
             _sidebar: false,
+            _section: "",
         };
     }
 

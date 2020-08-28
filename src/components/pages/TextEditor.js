@@ -2,6 +2,8 @@ import React, { Component, Fragment, useState, useCallback } from "react";
 import "trix/dist/trix";
 import { TrixEditor } from "react-trix";
 
+import { Menu } from "semantic-ui-react";
+
 // The editor core
 import Editor from "@react-page/editor";
 import "@react-page/core/lib/index.css"; // we also want to load the stylesheets
@@ -20,8 +22,19 @@ const plugins = {
     layout: [background({ defaultPlugin: slate() })], // Define plugins for layout cells
 };
 
+const $ = window.$;
+
 export const TextEditor = () => {
     const [editorValue, setEditorValue] = useState();
+    const [language, setLanguage] = useState();
+
+    const copyToClipboard = (str) => {
+        const el = document.createElement("textarea");
+        el.value = str;
+        document.body.appendChild(el);
+        el.select();
+        document.body.removeChild(el);
+    };
 
     const handleEditorReady = (editor) => {
         // this is a reference back to the editor if you want to
@@ -35,6 +48,37 @@ export const TextEditor = () => {
 
     return (
         <Fragment>
+            <Menu>
+                <Menu.Item
+                    onClick={() =>
+                        setLanguage(language == "nepali" ? "" : "nepali")
+                    }
+                >
+                    <div>
+                        <i className="sliders horizontal link icon" /> Nepali
+                    </div>
+                </Menu.Item>
+            </Menu>
+            <div className={language !== "nepali" ? "invisible" : ""}>
+                <a
+                    rel="nofollow"
+                    href="http://naya.com.np"
+                    title="Nepali Social Network"
+                    class="naya_convert"
+                ></a>
+                <textarea id="english-to-nepali"></textarea>
+
+                <button
+                    className="ui primary"
+                    onClick={() => {
+                        $("#english-to-nepali").select();
+                        document.execCommand("copy");
+                    }}
+                >
+                    Copy
+                </button>
+            </div>
+
             <Editor
                 plugins={plugins}
                 defaultPlugin={slate()}
