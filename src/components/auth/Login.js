@@ -60,7 +60,7 @@ const Login = (props) => {
     return (
         <div className="ui container" id="login-container">
             <div className="ui centered grid">
-                <div className="six wide computer sixteen wide mobile column">
+                <div className="fourteen wide computer sixteen wide mobile column">
                     <Segment padded loading={fetching}>
                         <h2 className="ui medium header text-center">Login</h2>
                         {Object.keys(errors).length > 0 && (

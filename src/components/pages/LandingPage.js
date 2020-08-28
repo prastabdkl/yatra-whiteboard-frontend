@@ -1,12 +1,14 @@
 import React, { useState } from "react";
 import "../../stylesheet/sites.css";
 import { Grid, Image } from "semantic-ui-react";
+import { Login } from "../auth";
 // import school from "../../images/school.jpg";
 // import text-editor from "../../images/text-editor.gif";
 
 import { Button, Icon } from "semantic-ui-react";
 
-export function LandingPage() {
+export function LandingPage(props) {
+    const [gettingStarted, setGettingStarted] = useState(false);
     return (
         <div>
             <div className="container-fluid ">
@@ -19,6 +21,7 @@ export function LandingPage() {
                                 id="#get-started-button"
                                 size="massive"
                                 color="violet"
+                                onClick={() => setGettingStarted(true)}
                             >
                                 <Button.Content visible>
                                     Get Started
@@ -27,6 +30,7 @@ export function LandingPage() {
                                     Create a board
                                 </Button.Content>
                             </Button>
+                            {gettingStarted && <Login {...props}></Login>}
                         </Grid.Column>
                         <Grid.Column width={11}>
                             <Image fluid src="../../images/school.jpg" />

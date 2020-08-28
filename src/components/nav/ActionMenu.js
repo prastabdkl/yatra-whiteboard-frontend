@@ -14,7 +14,7 @@ class ActionMenu extends React.Component {
         const { loggedIn, setGlobal, history } = this.props;
         return (
             <Fragment>
-                {!loggedIn && (
+                {/* {!loggedIn && (
                     <span
                         className="large link component"
                         onClick={() => {
@@ -24,7 +24,7 @@ class ActionMenu extends React.Component {
                     >
                         Login
                     </span>
-                )}
+                )} */}
                 {loggedIn && (
                     <Dropdown item text="Account" className="component">
                         <Dropdown.Menu>
