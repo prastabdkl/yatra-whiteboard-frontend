@@ -5,6 +5,10 @@ import { getUserProfile } from "./request";
 import App from "./App";
 import { Form, Modal, Button } from "semantic-ui-react";
 import { BoardForm } from "./components/boards";
+import { UpperNav } from "./components";
+import { Login } from "./components/auth";
+import { LandingPage } from "./components/pages";
+import { ToastContainer, toast } from "react-toastify";
 
 class Root extends React.Component {
     constructor(props) {
@@ -34,6 +38,10 @@ class Root extends React.Component {
                     });
                 }
             });
+        } else {
+            this.setState({
+                _token: null,
+            });
         }
     }
 
@@ -53,31 +61,48 @@ class Root extends React.Component {
     }
 
     render() {
+        const { _token } = this.state;
+        var content = (
+            <App
+                {...this.props}
+                {...this.state}
+                setGlobal={(key, val) => this.setGlobal(key, val)}
+                loggedIn={_token}
+            />
+        );
+        if (!_token) {
+            content = (
+                <div className="">
+                    <UpperNav
+                        {...this.props}
+                        setGlobal={(key, val) => this.setGlobal(key, val)}
+                        loggedIn={_token}
+                    />
+                    <LandingPage
+                        {...this.props}
+                        {...this.state}
+                        setGlobal={(key, val) => this.setGlobal(key, val)}
+                        loggedIn={_token}
+                    ></LandingPage>
+                    {/* <Login
+                        {...this.props}
+                        {...this.state}
+                        setGlobal={(key, val) => this.setGlobal(key, val)}
+                        loggedIn={_token}
+                    /> */}
+                </div>
+            );
+        }
+
         return (
             <Fragment>
-                <App
-                    {...this.props}
-                    {...this.state}
-                    setGlobal={(key, val) => this.setGlobal(key, val)}
+                {content}
+                <ToastContainer
+                    hideProgressBar={true}
+                    closeButton={false}
+                    draggablePercent={60}
+                    position="bottom-right"
                 />
-                <Modal
-                    size="mini"
-                    open={this.state._creatingBoard}
-                    onClose={() =>
-                        this.setState({
-                            _creatingBoard: false,
-                        })
-                    }
-                >
-                    <Modal.Header>Enter your board name</Modal.Header>
-                    <Modal.Content>
-                        <BoardForm
-                            {...this.props}
-                            {...this.state}
-                            setGlobal={(key, val) => this.setGlobal(key, val)}
-                        ></BoardForm>
-                    </Modal.Content>
-                </Modal>
             </Fragment>
         );
     }

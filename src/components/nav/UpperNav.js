@@ -4,6 +4,8 @@ import styles from "./UpperNav.module.css";
 import { ActionMenu } from "./ActionMenu";
 
 export function UpperNav(props) {
+    const { loggedIn, setGlobal, history } = props;
+
     return (
         <div className="ui fixed top attached inverted menu" id="UpperNav">
             <div
@@ -30,13 +32,15 @@ export function UpperNav(props) {
             </div>
             <div className="item font-20">Yatra 2.0</div>
             <div className="right item">
-                <div className="item">My Boards</div>
-                <div
-                    className="item"
-                    onClick={() => props.setGlobal("_creatingBoard", true)}
-                >
-                    Create New Board
-                </div>
+                {loggedIn && <div className="item">My Boards</div>}
+                {loggedIn && (
+                    <div
+                        className="item"
+                        onClick={() => props.setGlobal("_creatingBoard", true)}
+                    >
+                        Create New Board
+                    </div>
+                )}
                 <ActionMenu {...props} />
             </div>
         </div>

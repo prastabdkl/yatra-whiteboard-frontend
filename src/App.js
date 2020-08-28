@@ -15,6 +15,7 @@ import {
 // import { NotFound } from '../components'
 import Base from "./Base";
 import { Login } from "./components/auth";
+import { LandingPage } from "./components/pages";
 
 export const RenderRoutes = (props) => {
     return (
@@ -66,86 +67,66 @@ class App extends Base {
     }
 
     render() {
-        const { _token, loggedIn } = this.props;
-        var content = (
-            <App
-                {...this.props}
-                {...this.state}
-                setGlobal={(key, val) => this.setGlobal(key, val)}
-                loggedIn={_token}
-            />
-        );
-        if (!_token) {
-            content = (
-                <Fragment>
-                    <UpperNav
-                        {...this.props}
-                        setGlobal={(key, val) => this.setGlobal(key, val)}
-                        loggedIn={_token}
-                    />
-                    <Login
-                        {...this.props}
-                        {...this.state}
-                        setGlobal={(key, val) => this.setGlobal(key, val)}
-                        loggedIn={_token}
-                    />
-                </Fragment>
-            );
-        }
-        return (
-            <Sidebar.Pushable as={Segment} id="mainPusher">
-                {loggedIn && (
-                    <Sidebar
-                        as={Menu}
-                        animation="overlay"
-                        vertical
-                        visible={this.props._sidebar}
-                        width="wide"
-                        onShow={() => this.handleShow()}
-                        onHide={() => this.handleHide()}
-                        id="SideBarNav"
-                    >
-                        <SideNavContent
-                            {...this.props}
-                            {...this.state}
-                            routes={routes}
-                        />
-                    </Sidebar>
-                )}
-                <Sidebar.Pusher dimmed={this.props._sidebar}>
-                    <div className="ui fluid container">
-                        <UpperNav {...this.props} loggedIn={_token} />
+        const { _toasts, loggedIn } = this.props;
 
-                        <div
-                            className="ui equal width divided grid"
-                            id="mainContainer"
+        return (
+            <React.Fragment>
+                <Sidebar.Pushable as={Segment}>
+                    {loggedIn && (
+                        <Sidebar
+                            as={Menu}
+                            animation="overlay"
+                            inverted
+                            vertical
+                            visible={this.props._sidebar}
+                            width="wide"
+                            onShow={() => this.handleShow()}
+                            onHide={() => this.handleHide()}
+                            id="SideBarNav"
                         >
-                            <div className="three wide column" id="sideNav">
-                                <SideNav
-                                    {...this.props}
-                                    {...this.state}
-                                    routes={routes}
-                                    loggedIn={_token}
-                                />
-                            </div>
-                            <div className="column" id="mainContent">
-                                <RenderRoutes
-                                    {...this.props}
-                                    {...this.state}
-                                    routes={staticRoutes}
-                                    loggedIn={_token}
-                                />
+                            <SideNavContent
+                                {...this.props}
+                                {...this.state}
+                                routes={routes}
+                            />
+                        </Sidebar>
+                    )}
+                    <Sidebar.Pusher
+                        dimmed={this.props._sidebar}
+                        id="mainPusher"
+                    >
+                        <div className="ui fluid container">
+                            <UpperNav {...this.props} />
+
+                            <div
+                                className="ui equal width divided grid"
+                                id="mainContainer"
+                            >
+                                {loggedIn && (
+                                    <div
+                                        className="three wide column"
+                                        id="sideNav"
+                                    >
+                                        <SideNav
+                                            {...this.props}
+                                            {...this.state}
+                                            routes={routes}
+                                        />
+                                    </div>
+                                )}
+                                <div className="column" id="mainContent">
+                                    <RenderRoutes
+                                        {...this.props}
+                                        {...this.state}
+                                        routes={staticRoutes}
+                                    />
+                                </div>
                             </div>
                         </div>
-
-                        <ToastContainer
-                            hideProgressBar={true}
-                            closeButton={false}
-                            draggablePercent={60}
-                        />
-                    </div>
-                </Sidebar.Pusher>
-            </Sidebar.Pushable>
+                    </Sidebar.Pusher>
+                </Sidebar.Pushable>
+                {/* <Footer /> */}
+            </React.Fragment>
         );
     }
 }

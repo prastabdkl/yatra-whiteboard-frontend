@@ -49,7 +49,7 @@ const Login = (props) => {
                             key: response.data.key,
                         })
                     );
-                    props.history.push("/");
+                    props.history.push("/home");
                     props.setGlobal("_token", response.data.key);
                     window.location.reload();
                 });
@@ -58,7 +58,7 @@ const Login = (props) => {
     }, []);
 
     return (
-        <div className="ui container">
+        <div className="ui container" id="login-container">
             <div className="ui centered grid">
                 <div className="six wide computer sixteen wide mobile column">
                     <Segment padded loading={fetching}>
