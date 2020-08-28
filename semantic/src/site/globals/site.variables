@@ -1,0 +1,11 @@
+/*******************************
+     User Global Variables
+*******************************/
+
+@themecolor			: #56328c;
+
+@primaryColor        : @themecolor;
+@secondaryColor      : #000000;
+@pageBackground      : #eff0f1;
+
+@black               : #212529;

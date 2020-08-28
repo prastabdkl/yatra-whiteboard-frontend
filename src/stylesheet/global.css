@@ -1,0 +1,111 @@
+body {
+    background: white;
+    height: 100vh;
+}
+
+/* Global css  */
+
+#mainPusher {
+    overflow: visible;
+}
+
+#projctLogo {
+    cursor: pointer;
+}
+
+#mainContainer {
+    padding-top: 80px;
+    height: 100vh;
+}
+
+#sideNav {
+    width: 250px !important;
+    padding-left: 30px;
+}
+#SideBarNav {
+    padding-top: 30px;
+    width: 250px !important;
+}
+
+#SideNav .ui.secondary.vertical.menu .item > i.icon,
+#SideBarNav .ui.secondary.vertical.menu .item > i.icon {
+    margin-right: 10px !important;
+    float: left;
+}
+#SideNav .ui.secondary.vertical.menu .item > i.dropdown.icon,
+#SideBarNav .ui.secondary.vertical.menu .item > i.dropdown.icon {
+    float: right !important;
+}
+#kNav {
+    position: fixed;
+    width: 220px;
+    height: 90vh;
+    overflow-y: scroll;
+    scrollbar-width: none;
+    padding-bottom: 120px;
+}
+#kNav::-webkit-scrollbar {
+    width: 0 !important;
+    background: transparent;
+}
+#kNav .title.item {
+    margin-top: 5px;
+    margin-bottom: 5px;
+    padding-top: 12px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid #f7f5fb;
+}
+
+#SideBarNav #kNav .title.item {
+    font-size: 15px !important;
+    color: #56328c;
+}
+
+#mainFooter {
+    min-height: 100px;
+    text-align: center;
+    border-top: 1px solid lightgray;
+    color: white;
+    background: #5380a6;
+}
+
+@media only screen and (min-width: 768px) {
+    #navSwitcher {
+        display: none !important;
+    }
+    #projectLogo {
+        display: block !important;
+    }
+    #sideNav {
+        display: block !important;
+    }
+}
+@media only screen and (max-width: 767px) {
+    #navSwitcher {
+        display: block !important;
+    }
+    #projectLogo {
+        display: none !important;
+    }
+    #sideNav {
+        display: none !important;
+    }
+}
+
+/* Shotcut classes */
+
+.font-20 {
+    font-size: 20px !important;
+}
+
+.pointer {
+    cursor: pointer !important;
+}
+
+.display-block {
+    display: block !important;
+}
+
+.display-none {
+    display: none !important;
+}
