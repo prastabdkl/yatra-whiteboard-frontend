@@ -1,4 +1,4 @@
 export * from "./HomePage";
 export * from "./TextEditor";
 export * from "./CanvasEditor";
-export * from "./Demo";
+export * from "./LandingPage";
