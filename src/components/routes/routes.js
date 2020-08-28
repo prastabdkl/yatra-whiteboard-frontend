@@ -2,7 +2,7 @@ import React from "react";
 import { canAccess } from "../../misc";
 import { HomePage } from "../pages/HomePage";
 import { RoutePage } from "../pages/RoutePage";
-import { Login } from "../auth";
+import { Login, Signup } from "../auth";
 import { UsersList, UserForm, UserProfile, UserDetails } from "../users";
 import { TextEditor, CanvasEditor, LandingPage } from "../pages";
 
@@ -34,6 +34,12 @@ const routes = [
     exact: true,
     accessible: true,
     component: UserProfile,
+  },
+  {
+    path: "/signup",
+    component: Signup,
+    accessible: true,
+    exact: true,
   },
 
   {
