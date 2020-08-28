@@ -4,6 +4,7 @@ import { HomePage } from "../pages/HomePage";
 import { RoutePage } from "../pages/RoutePage";
 import { Login } from "../auth";
 import { UsersList, UserForm, UserProfile, UserDetails } from "../users";
+import { TextEditor, CanvasEditor } from "../pages";
 
 const user_permissions = [
     ["user-list", "post"],
@@ -41,7 +42,7 @@ const routes = [
         path: "#user",
         icon: "users",
         title: "User",
-        accessible: canAccess([["corporate-staff", true]]),
+        accessible: canAccess([["admin", true]]),
         exact: true,
         routes: [
             {
@@ -49,7 +50,7 @@ const routes = [
                 title: "All Users",
                 icon: "users",
                 component: UsersList,
-                accessible: canAccess([["corporate-staff", true]]),
+                accessible: canAccess([["admin", true]]),
                 exact: true,
             },
 
@@ -57,7 +58,7 @@ const routes = [
                 path: "/user/:idx",
                 icon: "file alternate",
                 component: UserDetails,
-                accessible: canAccess([["corporate-staff", true]]),
+                accessible: canAccess([["admin", true]]),
                 exact: true,
             },
 
@@ -65,7 +66,7 @@ const routes = [
                 path: "/users/new",
                 icon: "file alternate",
                 component: UserForm,
-                accessible: canAccess([["corporate-staff", true]]),
+                accessible: canAccess([["admin", true]]),
                 exact: true,
             },
 
@@ -73,7 +74,53 @@ const routes = [
                 path: "/user/:idx/edit",
                 icon: "file alternate",
                 component: UserForm,
-                accessible: canAccess([["corporate-staff", true]]),
+                accessible: canAccess([["admin", true]]),
+                exact: true,
+            },
+        ],
+    },
+
+    // Editor Routes
+
+    {
+        rootPath: "#",
+        path: "#user",
+        icon: "terminal",
+        title: "Editor",
+        accessible: true,
+        exact: true,
+        routes: [
+            {
+                path: "/user",
+                title: "Text editor",
+                icon: "file alternate",
+                component: TextEditor,
+                accessible: true,
+                exact: true,
+            },
+
+            {
+                path: "/user/:idx",
+                icon: "paint brush",
+                component: CanvasEditor,
+                title: "Canvas",
+                accessible: true,
+                exact: true,
+            },
+
+            {
+                path: "/users/new",
+                icon: "file alternate",
+                component: UserForm,
+                accessible: true,
+                exact: true,
+            },
+
+            {
+                path: "/user/:idx/edit",
+                icon: "file alternate",
+                component: UserForm,
+                accessible: true,
                 exact: true,
             },
         ],

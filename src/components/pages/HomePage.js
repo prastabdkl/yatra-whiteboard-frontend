@@ -1,4 +1,5 @@
 import React from "react";
+import { TextEditor } from "../pages";
 
 export function HomePage(props) {
     return (
@@ -9,6 +10,7 @@ export function HomePage(props) {
                     Home Page
                 </div>
             </div>
+            <TextEditor></TextEditor>
         </div>
     );
 }
