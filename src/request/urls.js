@@ -1,13 +1,19 @@
 export const URLS = {
-    LOGIN: `/api/login/`,
-    USER: `/api/user/`,
+    SIGNUP: `/rest-auth/registration/`,
+    LOGIN: `/api/v1/accounts/rest-auth/login/`,
+    USER: `/api/v1/accounts/rest-auth/user/`,
     USER_DETAIL: `/api/user/:idx/`,
-    USER_PROFILE: `/api/me/`,
+    USER_PROFILE: `/api/v1/accounts/rest-auth/user/`,
     USER_EXPORT: `/api/user/export`,
-    USER_PASSWORD: `/api/user/:idx/change_password/`,
+    USER_PASSWORD: `/api/v1/accounts/rest-auth/password/change/`,
 
     BRANCH: `/api/branch/`,
     BRANCH_DETAIL: `/api/branch/:idx/`,
 
     ROLE: `/api/role/`,
+
+    BOARD: `/api/boards/`,
+    BOARD_CREATE: `/api/v1/boards/create/`,
+    MY_BOARD: `/api/my_boards/:idx/`,
+    BOARD_DETAIL: `/api/v1/boards/:idx/`,
 };

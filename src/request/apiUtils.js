@@ -37,9 +37,7 @@ export function useInterceptor(axios) {
                 window.localStorage.getItem("_user-details")
             );
             if (userDetails) {
-                config.headers[
-                    "Authorization"
-                ] = `Token ${userDetails.auth_token}`;
+                config.headers["Authorization"] = `Token ${userDetails.key}`;
             }
             config["xsrfCookieName"] = "csrftoken";
             config["xsrfHeaderName"] = "X-CSRFToken";

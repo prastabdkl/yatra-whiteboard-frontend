@@ -41,13 +41,16 @@ const Login = (props) => {
                         setError(response.data);
                         return;
                     }
-                    props.setGlobal("_user", response.data);
+                    props.setGlobal("_user", response.data.user);
                     window.localStorage.setItem(
                         "_user-details",
-                        JSON.stringify(response.data)
+                        JSON.stringify({
+                            ...response.data.user,
+                            key: response.data.key,
+                        })
                     );
                     props.history.push("/");
-                    props.setGlobal("_token", response.data.auth_token);
+                    props.setGlobal("_token", response.data.key);
                     window.location.reload();
                 });
             },
