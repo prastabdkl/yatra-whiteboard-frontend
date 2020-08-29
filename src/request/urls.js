@@ -15,5 +15,7 @@ export const URLS = {
     BOARD: `/api/v1/boards/list`,
     BOARD_CREATE: `/api/v1/boards/create/`,
     MY_BOARD: `/api/my_boards/:idx/`,
-    BOARD_DETAIL: `/api/v1/boards/:idx/`,
+    BOARD_DETAIL: `/api/v1/boards/search/:idx/`,
+
+    UPLOAD_PICTURE: `/api/v1/boards/savepic/`,
 };

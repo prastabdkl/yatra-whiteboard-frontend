@@ -13,14 +13,15 @@ export const BoardForm = (props) => {
         var form = $("#BoardForm").form();
         form.form({
             fields: {
-                name: "empty",
+                title: "empty",
             },
             onSuccess: (e) => {
                 e.preventDefault();
 
                 var data = form.form("get values");
                 setFetching(true);
-                data.user = props._user.idx;
+                data.user = props._user.id;
+                debugger;
                 createBoard(data).then((response) => {
                     debugger;
                     setFetching(false);
@@ -42,8 +43,8 @@ export const BoardForm = (props) => {
                 <div className="text-center">
                     <Form.Field>
                         <Form.Input
-                            id="name"
-                            name="name"
+                            id="title"
+                            name="title"
                             type="text"
                         ></Form.Input>
                     </Form.Field>

@@ -29,7 +29,14 @@ const Listing = ({ values }) => {
             {values.map((board) => (
                 <List.Item className="item">
                     <List.Content floated="right"></List.Content>
-                    {board.picture && <Image avatar src={board.picture} />}
+                    <Image
+                        avatar
+                        src={
+                            board.picture
+                                ? board.picture
+                                : "https://img.favpng.com/19/13/22/drawing-board-computer-file-png-favpng-Nb6TuEqFtzBQbhBsmpUvEne9h.jpg"
+                        }
+                    />
                     <List.Content>
                         <div>
                             <Link

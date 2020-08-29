@@ -1,8 +1,10 @@
 import React, { Component, Fragment, useState, useCallback } from "react";
 import "trix/dist/trix";
 import { TrixEditor } from "react-trix";
+import { v4 as uuidv4 } from "uuid";
+import { postFormData, updateBoard } from "../../request";
 
-import { Menu } from "semantic-ui-react";
+import { Menu, Button } from "semantic-ui-react";
 
 // React Page
 import Editor from "@react-page/editor";
@@ -55,6 +57,32 @@ export const TextEditor = (props) => {
                         <i className="sliders horizontal link icon" /> Nepali
                     </div>
                 </Menu.Item>
+                <Menu.Menu position="right">
+                    <Menu.Item>
+                        <Button
+                            basic
+                            color="green"
+                            className="right floated"
+                            onClick={() => {
+                                var values = {};
+                                var key = props.keyID || uuidv4();
+                                values[key] = {
+                                    type: "text-editor",
+                                    data: content,
+                                };
+                                debugger;
+                                // TODO
+                                updateBoard(props.idx, { extras: values }).then(
+                                    () => {
+                                        debugger;
+                                    }
+                                );
+                            }}
+                        >
+                            Save
+                        </Button>
+                    </Menu.Item>
+                </Menu.Menu>
             </Menu>
             <TrixEditor
                 onEditorReady={handleEditorReady}

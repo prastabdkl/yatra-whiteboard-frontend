@@ -82,37 +82,10 @@ class UserProfile extends Component {
                                                     <i className="grey user icon huge center aligned" />
                                                 </div>
                                                 <h2>{user.name}</h2>
-                                                Status: &nbsp;
-                                                {user.is_active && (
-                                                    <Label
-                                                        horizontal
-                                                        size="tiny"
-                                                        className="green"
-                                                    >
-                                                        Active
-                                                    </Label>
-                                                )}
-                                                {!user.is_active && (
-                                                    <Label
-                                                        horizontal
-                                                        size="tiny"
-                                                        className="red"
-                                                    >
-                                                        Inactive
-                                                    </Label>
-                                                )}
                                                 <div>
                                                     <i className="grey mail outline icon" />
                                                     {user.email}
                                                 </div>
-                                                {/* <div>
-													<i className='grey address book outline icon' />
-													{user.address}
-												</div>
-												<div>
-													<i className='grey mobile alternate icon' />
-													{user.mobile}
-												</div> */}
                                             </div>
                                             <div className="ten wide computer sixteen wide mobile column">
                                                 <h3 className="page-title">
@@ -151,9 +124,10 @@ class UserProfile extends Component {
                                                                     floated="left"
                                                                     width={8}
                                                                 >
-                                                                    Branch
+                                                                    Preferred
+                                                                    Languages
                                                                 </Grid.Column>
-                                                                {user.branch && (
+                                                                {
                                                                     <Grid.Column
                                                                         floated="right"
                                                                         width={
@@ -161,13 +135,22 @@ class UserProfile extends Component {
                                                                         }
                                                                         textAlign="right"
                                                                     >
-                                                                        {
-                                                                            user
-                                                                                .branch
-                                                                                .name
-                                                                        }
+                                                                        {[
+                                                                            "English",
+                                                                            "Nepali",
+                                                                        ].map(
+                                                                            (
+                                                                                v
+                                                                            ) => (
+                                                                                <div className="ui label">
+                                                                                    {
+                                                                                        v
+                                                                                    }
+                                                                                </div>
+                                                                            )
+                                                                        )}
                                                                     </Grid.Column>
-                                                                )}
+                                                                }
                                                             </Grid>
                                                         </List.Content>
                                                     </List.Item>

@@ -26,6 +26,7 @@
     "recompose": "^0.30.0",
     "semantic-ui": "^2.4.2",
     "semantic-ui-react": "^0.88.2",
+    "uuid": "^8.3.0",
     "yup": "^0.29.3"
   },
   "watch": {

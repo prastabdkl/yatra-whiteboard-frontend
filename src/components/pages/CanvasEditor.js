@@ -3,7 +3,9 @@ import ReactDOM from "react-dom";
 import CanvasDraw from "react-canvas-draw";
 import { SketchPicker } from "react-color";
 import { useState } from "react";
-import { Form, Button, Popup } from "semantic-ui-react";
+import { Form, Button, Popup, Grid } from "semantic-ui-react";
+import { postFormData, updateBoard } from "../../request";
+import { v4 as uuidv4 } from "uuid";
 
 const $ = window.$;
 
@@ -12,8 +14,8 @@ export const CanvasEditor = (props) => {
         changeBrushRadius: false,
         brushColor: "#E01F1F",
         brushRadius: 4,
-        cWidth: 400,
-        cHeight: 400,
+        canvasWidth: 400,
+        canvasHeight: 400,
     });
     const [image, setImage] = useState({ name: "", data: "" });
 
@@ -42,84 +44,107 @@ export const CanvasEditor = (props) => {
                 {...props}
                 ref={(canvasDraw) => (saveableCanvas = canvasDraw)}
             />
-            <Popup
-                content="Brush Color"
-                inverted
-                trigger={
-                    <Button
-                        circular
-                        color="green"
-                        icon="paint brush"
-                        onClick={() => {
-                            setOptions({ selectColor: !options.selectColor });
-                        }}
+            <Grid>
+                <Grid.Column floated="left" width={8}>
+                    <Popup
+                        content="Brush Color"
+                        inverted
+                        trigger={
+                            <Button
+                                circular
+                                color="green"
+                                icon="paint brush"
+                                onClick={() => {
+                                    setOptions({
+                                        selectColor: !options.selectColor,
+                                    });
+                                }}
+                            />
+                        }
                     />
-                }
-            />
-            <Popup
-                content="Brush Radius"
-                inverted
-                trigger={
-                    <Button
-                        circular
-                        color="red"
-                        icon="paint brush"
-                        onClick={() => {
-                            setOptions({
-                                ...options,
-                                changeBrushRadius: !options.changeBrushRadius,
-                            });
-                        }}
+                    <Popup
+                        content="Brush Radius"
+                        inverted
+                        trigger={
+                            <Button
+                                circular
+                                color="red"
+                                icon="paint brush"
+                                onClick={() => {
+                                    setOptions({
+                                        ...options,
+                                        changeBrushRadius: !options.changeBrushRadius,
+                                    });
+                                }}
+                            />
+                        }
                     />
-                }
-            />
-            <Popup
-                content="Upload Image"
-                inverted
-                trigger={
-                    <Button
-                        circular
-                        color="blue"
-                        icon="attach"
-                        onClick={() => {
-                            $("#image-upload").trigger("click");
-                        }}
+                    <Popup
+                        content="Upload Image"
+                        inverted
+                        trigger={
+                            <Button
+                                circular
+                                color="blue"
+                                icon="attach"
+                                onClick={() => {
+                                    $("#image-upload").trigger("click");
+                                }}
+                            />
+                        }
                     />
-                }
-            />
-            <button
-                className="ui button basic primary"
-                onClick={() => {
-                    localStorage.setItem(
-                        "savedDrawing",
-                        saveableCanvas.getSaveData()
-                    );
-                }}
-            >
-                Save
-            </button>
-            <button
-                className="ui button basic negative"
-                onClick={() => {
-                    saveableCanvas.clear();
-                }}
-            >
-                Clear
-            </button>
-            <Popup
-                content="Undo"
-                inverted
-                trigger={
-                    <Button
-                        circular
-                        color="blue"
-                        icon="share"
-                        onClick={() => {
-                            saveableCanvas.undo();
-                        }}
+                    <Popup
+                        content="Undo"
+                        inverted
+                        trigger={
+                            <Button
+                                circular
+                                color="blue"
+                                icon="share"
+                                onClick={() => {
+                                    saveableCanvas.undo();
+                                }}
+                            />
+                        }
                     />
+                </Grid.Column>
+                {
+                    <Grid.Column floated="right" width={8} textAlign="right">
+                        <button
+                            className="ui button basic primary"
+                            onClick={() => {
+                                localStorage.setItem(
+                                    "savedDrawing",
+                                    saveableCanvas.getSaveData()
+                                );
+                                var values = {};
+                                var key = props.keyID || uuidv4();
+                                values[key] = {
+                                    type: "canvas-editor",
+                                    imgSrc: props.imgSrc,
+                                    data: saveableCanvas.getSaveData(),
+                                };
+                                updateBoard(props.idx, { extras: values }).then(
+                                    (v) => {
+                                        debugger;
+                                    }
+                                );
+                            }}
+                        >
+                            Save
+                        </button>
+                        <button
+                            className="ui button basic negative"
+                            onClick={() => {
+                                saveableCanvas.clear();
+                            }}
+                        >
+                            Clear
+                        </button>
+                    </Grid.Column>
                 }
-            />
+            </Grid>
+
             <div>
                 {options.selectColor && (
                     <SketchPicker
@@ -170,6 +195,15 @@ export const CanvasEditor = (props) => {
                         name="image"
                         onChange={(event) => {
                             var file = event.target.files[0];
+                            postFormData("UPLOAD_PICTURE", {
+                                image: file,
+                            }).then((v) => {
+                                debugger;
+                                setOptions({
+                                    ...options,
+                                    imgSrc: v.data.image,
+                                });
+                            });
                             var reader = new FileReader();
                             reader.onload = function (item) {
                                 setImage({
