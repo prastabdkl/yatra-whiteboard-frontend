@@ -8,6 +8,13 @@ import {
     makeUrl,
 } from "./api";
 
+export function signUpUser(credentials) {
+    return api_post({
+        url: "SIGNUP",
+        data: credentials,
+    })();
+}
+
 export function loginUser(credentials) {
     return api_post({
         url: "LOGIN",
