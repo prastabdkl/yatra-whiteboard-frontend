@@ -32,7 +32,7 @@ export function BoardDetails(props) {
         if (idx !== undefined) {
             getBoardDetails(idx).then((response) => {
                 debugger;
-                const boardValues = Object.entries(uResponse.extras).map(
+                const boardValues = Object.entries(response.data.extras).map(
                     ([k, v]) => {
                         return { key: k, ...v };
                     }

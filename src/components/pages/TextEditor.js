@@ -96,7 +96,7 @@ export const TextEditor = (props) => {
                 value={editorValue}
                 onChange={setEditorValue}
             /> */}
-            <div className={language !== "nepali" ? "invisible" : ""}>
+            {/* <div className={language !== "nepali" ? "invisible" : ""}>
                 <a
                     rel="nofollow"
                     href="http://naya.com.np"
@@ -114,7 +114,7 @@ export const TextEditor = (props) => {
                 >
                     Copy
                 </button>
-            </div>
+            </div> */}
         </Fragment>
     );
 };
